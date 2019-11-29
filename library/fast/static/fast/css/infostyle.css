@@ -1,0 +1,9 @@
+body{
+    background-color: rgb(216, 228, 238);
+}
+#table{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}

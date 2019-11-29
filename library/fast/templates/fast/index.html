@@ -1,0 +1,206 @@
+﻿{% load static %}
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<HTML lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>library</title>
+    <style>
+        body {
+            margin-left: 50px;
+            margin-right: 50px;
+            background-color:whitesmoke;
+            overflow: auto;
+        }
+                .header {
+                    background-color: #34495E;
+                    width: 100%;
+                    overflow: auto;
+                    display: block;
+                }
+        .iconbar {
+          width: 100%;
+          background-color: gray;
+          overflow: auto;
+        }
+        
+        .iconbar a {
+          float: left;
+          width: 25%;
+          text-align: center;
+          padding: 12px 0;
+          transition: all 0.3s ease;
+          color: white;
+          font-size: 20px;
+        }
+        
+        .iconbar a:hover {
+          background-color: #000;
+        }
+        
+        .active {
+          background-color: darkgrey;
+        }
+        .logo {
+            width:85%;
+            background-color:transparent;
+        
+        }
+        .logo img {
+            float:left;
+            background-color:transparent;
+            width:100px;
+            height:100px;
+            margin-left: 200px;
+            margin-bottom: 20px;
+        }
+        .logo h1 {
+            text-align: center;
+            text-shadow: 15px 15px 25px #000;
+            position: relative;
+            color:white;
+            font-size: 350%;
+        }
+        .sliderdiv{
+          width: 70%;
+          height: 300px;
+          left: 50%;
+          top: 3rem;
+          transform: translate(-50%);
+          position: relative;
+          background-image: url('{% static 'fast/img/indexslider1.jpeg' %}');
+          background-size: 100% 100%;
+          box-shadow: 2px 2px 10px 5px white;
+          animation:slider 20s infinite ease;
+        }
+        @keyframes slider{
+          0%{background-image: url('{% static 'fast/img/indexslider1.jpeg' %}');}
+          33.3%{background-image: url('{% static 'fast/img/indexslider2.jpeg' %}');}
+          66.6%{background-image: url('{% static 'fast/img/indexslider3.jpeg' %}');}
+        }
+        
+        
+                .col-md-3
+                {
+                display: inline-block;
+                margin-left:-4px;
+                }
+                .carousel-indicators .active {
+                background-color: blue;
+                }
+                .col-md-3 img{
+                width:100%;
+                height:auto;
+                }
+                body .carousel-indicator li{
+                background-color: blue;
+                }
+                body .carousel-indicators{
+                bottom: 0;
+                }
+                body .carousel-control-prev-icon,
+                body .carousel-control-next-icon{
+                background-color: blue;
+                }
+                body .no-padding{
+                 padding-left: 0;
+                 padding-right: 0;
+                }
+                .container h1{
+                    color: black;
+        
+                }
+                .card-title{
+                    color: black;
+                    text-align: center;
+                }
+                .card-text{
+                    color: black;
+                    text-align: center;
+                };
+                .footer{
+                    width: 100%;
+                    background-color: navy;
+                    color: whitesmoke;
+                }
+                
+            </style>
+    <link rel="icon" href="static/fast/img/titleicon.jpg" />
+    <!--link rel="stylesheet" type="text/css" href="{% static 'fast/css/indexstyle.css' %}" /-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+</head>
+<body>
+    <div class="header">
+            <div class="iconbar">
+                    <a class="active" href="#"><i class="fa fa-home"> </i></a>
+                    <a href="{% url 'search' %}"><i class="fa fa-search"></i></a> 
+                    <a href="#"><i class="fa fa-user"></i></a> 
+                    <a href="{% url 'login' %}"><i class="fa fa-sign-in"></i></a>
+                </div>
+                
+                <div class="logo">
+                    <img src="{% static 'fast/img/logo1.png' %}" />
+                    <h1>Library Management System</h1>
+                </div>
+
+    </div>
+    <div class="sliderdiv"></div>
+    <div class="container">
+        {% for books,range,nSlides in allBooks %}
+        <h1>{{books.0.category}}</h1>
+        <div id="recent{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
+            <ul class="carousel-indicators">
+                <li data-target="#recent{{forloop.counter}}" data-slide-to="0" class="active"></li>
+                {% for i in range %}
+                <li data-target="#recent{{forloop.parentloop.counter}}" data-slide-to="{{i}}" ></li>
+                {% endfor %}
+            </ul>
+    
+            <!--Slideshow starts here -->
+            <div class="container carousel-inner no-padding">
+                <div class="carousel-item active">
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <div class="card" style="width: 18rem;">
+                            <img src='/media/{{books.0.image}}' class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{books.0.Name}}</h5>
+                                <p class="card-text">{{books.0.Edition}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% for i in books|slice:"1:" %}
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <div class="card" style="width: 18rem;">
+                            <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{i.Name}}</h5>
+                                <p class="card-text">{{i.Edition}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:3 and forloop.counter > 0 and not forloop.last %}
+                    </div><div class="carousel-item">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        
+    
+        <!-- left and right controls for the slide -->
+        <a class="carousel-control-prev" href="#recent{{forloop.counter}}" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#recent{{forloop.counter}}" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+        {% endfor %}
+        
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>

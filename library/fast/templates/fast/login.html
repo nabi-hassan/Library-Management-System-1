@@ -1,0 +1,158 @@
+{% load static %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<HTML lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <style>
+body{
+  margin-left: 50px;
+  margin-right: 50px;
+  font-family: sans-serif;
+    background-color:whitesmoke ;
+
+}
+.header{
+    background-color:#17202A ;
+    width: 100%;
+    overflow: auto;
+    display: block;
+    padding: 10px;
+}
+.iconbar {
+  width: 100%;
+  background-color: gray;
+  overflow: auto;
+}
+
+.iconbar a {
+  float: left;
+  width: 25%;
+  text-align: center;
+  padding: 12px 0;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 20px;
+}
+
+.iconbar a:hover {
+  background-color: #000;
+}
+
+.active {
+  background-color: darkgray;
+}
+
+.logo {
+    width:85%;
+    background-color:transparent;
+
+}
+.logo img {
+    float:left;
+    background-color:transparent;
+    width:100px;
+    height:100px;
+    margin-left: 200px;
+    margin-bottom: 20px;
+}
+.logo h1 {
+    text-align: center;
+    text-shadow: 15px 15px 25px #000;
+    position: relative;
+    color:white;
+    font-size: 350%;
+}
+
+.login-box{
+  width: 100%;
+  position: relative;
+  
+  left: 50%;
+  transform: translate(-50%);
+  top: 10em;
+  color: black;
+  font-weight: bold;
+}
+.textbox{
+  width: 50%;
+  overflow: hidden;
+  font-size: 20px;
+  padding: 8px 0;
+  margin: 8px 0;
+  border: 1px solid #4caf50;
+    margin-left: 50%;
+    transform: translate(-50%);
+}
+.textbox input{
+  border: none;
+  outline: none;
+  background: none;
+  color: white;
+  font-size: 18px;
+  width: 80%;
+  float: left;
+  margin: 0 10px;
+}
+.btn{   
+    text-align:center;
+    width: 25%;
+     background: none;
+     border: 2px solid #4caf50;
+     color: black;
+     padding: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-top: 12px;
+}
+
+        </style>
+
+    </head>
+    <body>
+            <div class="header">
+                <div class="iconbar">
+                    <a href="{% url 'home' %}"><i class="fa fa-home"></i></a>
+                    <a href="{% url 'search' %}"><i class="fa fa-search"></i></a>
+                    <a href="#"><i class="fa fa-user"></i></a>
+                    <a class="active" href="#"><i class="fa fa-sign-in"></i></a>
+    
+                </div>
+                <div class="logo">
+                    <img src="{% static 'fast/img/logo1.png' %}" />
+                    <h1>Library Management System</h1>
+                </div>
+            </div>
+            <div class="bo-x">
+                {% if form.errors %}
+                <p>Your username and password didn't match. Please try again.</p>
+                {% endif %}
+    
+                {% if next %}
+                {% if user.is_authenticated %}
+                <p>
+                    Your account doesn't have access to this page. To proceed,
+                    please login with an account that has access.
+                </p>
+                {% else %}
+                <p>Please login to see this page.</p>
+                {% endif %}
+                {% endif %}
+
+
+              <form class="login-box" action="{% url 'login' %}" method='post'> {% csrf_token %}
+                <br><br>
+                <input class="textbox" type='text' name='username' placeholder="username">
+                <input class="textbox" type='password' name='password' placeholder="password">
+                
+                <input type="submit" class="btn" value="Login">
+                <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+            </div>
+            
+        
+    </body>
+</HTML>

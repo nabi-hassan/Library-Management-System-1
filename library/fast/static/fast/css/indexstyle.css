@@ -1,0 +1,49 @@
+﻿body {
+    background-image:url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: 1366px 768px;
+}
+.iconbar {
+  width: 100%;
+  background-color: darkgray;
+  overflow: auto;
+}
+
+.iconbar a {
+  float: left;
+  width: 25%;
+  text-align: center;
+  padding: 12px 0;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 20px;
+}
+
+.iconbar a:hover {
+  background-color: #000;
+}
+
+.active {
+  background-color: #4CAF50;
+}
+.logo {
+    width:85%;
+    background-color:transparent;
+
+}
+.logo img {
+    float:left;
+    background-color:transparent;
+    width:100px;
+    height:100px;
+}
+.logo h1 {
+  text-align: center;
+    text-shadow: 15px 15px 25px #000;
+    position: relative;
+    color:white;
+    font-size:80px;
+}
+.our-collection h1 {
+    text-align: center;
+}
